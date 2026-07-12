@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"time"
+
+	"github.com/lqh0926/myOtelColler/internal/model"
 )
 
 const (
@@ -16,22 +18,13 @@ const (
 	defaultShutdownTimeout   = 10 * time.Second
 )
 
-// Priority is the request-level priority used by the queue processor.
-// It intentionally lives in config until the internal model is introduced.
-type Priority string
-
-const (
-	PriorityLow  Priority = "low"
-	PriorityHigh Priority = "high"
-)
-
 // Config contains the complete first-version collector configuration.
 type Config struct {
 	OTLPAddress       string
 	PrometheusAddress string
 	Queue             QueueConfig
 	ShutdownTimeout   time.Duration
-	DefaultPriority   Priority
+	DefaultPriority   model.Priority
 }
 
 // QueueConfig controls the bounded queue and its hysteresis thresholds.
@@ -52,7 +45,7 @@ func Default() Config {
 			LowWatermark:  defaultLowWatermark,
 		},
 		ShutdownTimeout: defaultShutdownTimeout,
-		DefaultPriority: PriorityLow,
+		DefaultPriority: model.PriorityLow,
 	}
 }
 
@@ -80,8 +73,8 @@ func (c Config) Validate() error {
 	if c.ShutdownTimeout <= 0 {
 		return errors.New("shutdown timeout must be greater than zero")
 	}
-	if c.DefaultPriority != PriorityLow && c.DefaultPriority != PriorityHigh {
-		return fmt.Errorf("unsupported default priority %q", c.DefaultPriority)
+	if !c.DefaultPriority.Valid() {
+		return fmt.Errorf("unsupported default priority %d", c.DefaultPriority)
 	}
 	return nil
 }

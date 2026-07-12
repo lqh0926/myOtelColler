@@ -34,16 +34,16 @@ OTLP/gRPC Receiver → Queue Processor → Prometheus Exporter
 
 ## 1. Pipeline 契约与内部模型（所有者主导）
 
-- [ ] 在 `internal/model/` 定义 `MetricBatch`、`Metric`、`DataPoint`、`Priority` 和指标类型。
-- [ ] 将 value 统一为 `float64`，attributes 限定为 `map[string]string`。
-- [ ] 在 `internal/pipeline/` 定义：
-  - [ ] `MetricsConsumer.ConsumeMetrics(context.Context, *MetricBatch) error`
-  - [ ] `Starter.Start(context.Context) error`
-  - [ ] `Shutdowner.Shutdown(context.Context) error`
-  - [ ] 可识别的 `ErrQueueFull`
-- [ ] 用包注释明确 batch 所有权：调用 `ConsumeMetrics` 后所有权无条件转移，调用方不得再次访问。
-- [ ] 用包注释明确返回语义：`nil` 可代表接管或策略性丢弃，不代表已导出或持久化。
-- [ ] 补充模型与错误契约的单元测试。
+- [x] 在 `internal/model/` 定义 `MetricBatch`、`Metric`、`DataPoint`、`Priority` 和指标类型。
+- [x] 将 value 统一为 `float64`，attributes 限定为 `map[string]string`。
+- [x] 在 `internal/pipeline/` 定义：
+  - [x] `MetricsConsumer.ConsumeMetrics(context.Context, *MetricBatch) error`
+  - [x] `Starter.Start(context.Context) error`
+  - [x] `Shutdowner.Shutdown(context.Context) error`
+  - [x] 可识别的 `ErrQueueFull`
+- [x] 用包注释明确 batch 所有权：调用 `ConsumeMetrics` 后所有权无条件转移，调用方不得再次访问。
+- [x] 用包注释明确返回语义：`nil` 可代表接管或策略性丢弃，不代表已导出或持久化。
+- [x] 补充模型与错误契约的单元测试。
 
 验收：Receiver、Processor、Exporter 仅通过小接口串联；pipeline 不依赖 OTLP protobuf 或 Prometheus 类型。
 
