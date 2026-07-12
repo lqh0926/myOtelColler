@@ -1,0 +1,20 @@
+# Build outputs
+/bin/
+/dist/
+*.out
+*.test
+
+# Coverage and profiling
+coverage.*
+*.prof
+
+# Local configuration and environment
+.env
+*.local.yaml
+*.local.yml
+
+# Editor and OS metadata
+.DS_Store
+.idea/
+.vscode/
+
