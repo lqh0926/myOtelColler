@@ -49,12 +49,12 @@ OTLP/gRPC Receiver → Queue Processor → Prometheus Exporter
 
 ## 2. Prometheus Exporter
 
-- [ ] 实现 `MetricsConsumer`，将内部 Gauge 转换为可抓取的 Prometheus 指标。
-- [ ] 实现单调累计 Counter 的输出语义，并明确处理重启、回退值和重复序列的第一版约束。
-- [ ] 将 resource、scope 和 datapoint 字符串 attributes 映射为标签，并处理非法名称和标签冲突。
-- [ ] 明确同名指标但类型、描述、单位或标签集合不一致时的错误策略。
-- [ ] 提供独立 HTTP scrape endpoint 和生命周期管理。
-- [ ] 为 Gauge、Counter、多 datapoint、冲突输入和 context cancellation 编写测试。
+- [x] 实现 `MetricsConsumer`，将内部 Gauge 转换为可抓取的 Prometheus 指标。
+- [x] 实现单调累计 Counter 的输出语义，并明确处理重启、回退值和重复序列的第一版约束。
+- [x] 将 resource、scope 和 datapoint 字符串 attributes 映射为标签，并处理非法名称和标签冲突。
+- [x] 明确同名指标但类型、描述、单位或标签集合不一致时的错误策略。
+- [x] 提供独立 HTTP scrape endpoint 和生命周期管理。
+- [x] 为 Gauge、Counter、多 datapoint、冲突输入和 context cancellation 编写测试。
 
 验收：直接向 exporter 传入内部 batch 后，HTTP endpoint 输出合法的 Prometheus exposition text。
 
