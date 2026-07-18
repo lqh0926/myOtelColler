@@ -60,17 +60,17 @@ OTLP/gRPC Receiver → Queue Processor → Prometheus Exporter
 
 ## 3. OTLP/gRPC Receiver 与模型转换
 
-- [ ] 使用官方 OTLP MetricsService protobuf 实现 unary `Export` RPC。
-- [ ] 从 gRPC metadata 读取请求级 `Low | High` 优先级；缺失时使用配置的默认值。
-- [ ] 按 `Resource + Scope` 将请求拆成一个或多个 `MetricBatch`。
-- [ ] 转换 Gauge 和单调累计 Counter 的数值、时间戳、描述、单位与字符串 attributes。
-- [ ] 对未支持数据显式处理：
-  - [ ] Histogram、非单调 Sum 和其他指标类型明确拒绝或记录后跳过。
-  - [ ] 非字符串 attributes 明确拒绝或记录后跳过。
-  - [ ] 禁止静默错误转换。
-- [ ] 将下游可识别错误映射为明确的 gRPC 状态码；策略性丢弃仍返回成功。
-- [ ] 实现 gRPC server 的 Start/Shutdown，停止时先关闭入口。
-- [ ] 编写转换表驱动测试和 receiver 集成测试。
+- [x] 使用官方 OTLP MetricsService protobuf 实现 unary `Export` RPC。
+- [x] 从 gRPC metadata 读取请求级 `Low | High` 优先级；缺失时使用配置的默认值。
+- [x] 按 `Resource + Scope` 将请求拆成一个或多个 `MetricBatch`。
+- [x] 转换 Gauge 和单调累计 Counter 的数值、时间戳、描述、单位与字符串 attributes。
+- [x] 对未支持数据显式处理：
+  - [x] Histogram、非单调 Sum 和其他指标类型明确拒绝或记录后跳过。
+  - [x] 非字符串 attributes 明确拒绝或记录后跳过。
+  - [x] 禁止静默错误转换。
+- [x] 将下游可识别错误映射为明确的 gRPC 状态码；策略性丢弃仍返回成功。
+- [x] 实现 gRPC server 的 Start/Shutdown，停止时先关闭入口。
+- [x] 编写转换表驱动测试和 receiver 集成测试。
 
 验收：OTLP 请求可被正确拆分、转换并交给 mock consumer；非法输入行为可观察且有测试覆盖。
 
